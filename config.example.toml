@@ -1,0 +1,34 @@
+# AIW Configuration Example
+# Copy this file to ~/.config/aiw/config.toml and customize
+
+default_tool = "gemini"
+
+[server]
+host = "0.0.0.0"
+port = 8000
+
+# Gemini CLI
+[tools.gemini]
+cmd = "gemini"
+default_model = "gemini-2.0-flash"
+models = ["gemini-2.0-flash", "gemini-2.5-pro"]
+model_flag = "--model"
+
+# Kiro CLI
+[tools.kiro]
+cmd = "kiro-cli chat"
+default_model = "sonnet"
+models = ["sonnet", "opus"]
+model_flag = "--model"
+
+# Claude CLI
+[tools.claude]
+cmd = "claude"
+default_model = "sonnet"
+models = ["sonnet", "opus"]
+model_flag = "--model"
+# Optional: source environment file before starting
+# source_env = "~/.env"
+# Optional: set environment variables
+# [tools.claude.env]
+# ANTHROPIC_API_KEY = "your-api-key"
