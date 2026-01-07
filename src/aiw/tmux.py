@@ -107,6 +107,31 @@ def attach_workspace(name: str) -> bool:
     subprocess.run(f"tmux attach -t {PREFIX}{name}", shell=True)
     return True
 
+def rename_workspace(old_name: str, new_name: str) -> dict:
+    """重命名工作空间"""
+    old_session = f"{SESSION_PREFIX}{old_name}"
+    new_session = f"{SESSION_PREFIX}{new_name}"
+    
+    if not workspace_exists(old_name):
+        return {"success": False, "error": f"Workspace '{old_name}' not found"}
+    if workspace_exists(new_name):
+        return {"success": False, "error": f"Workspace '{new_name}' already exists"}
+    
+    # 重命名 tmux session
+    run_tmux(["rename-session", "-t", old_session, new_session])
+    
+    # 更新元数据文件
+    old_meta = META_DIR / f"{old_name}.json"
+    new_meta = META_DIR / f"{new_name}.json"
+    if old_meta.exists():
+        import json
+        data = json.loads(old_meta.read_text())
+        data["name"] = new_name
+        new_meta.write_text(json.dumps(data))
+        old_meta.unlink()
+    
+    return {"success": True, "old_name": old_name, "new_name": new_name}
+
 def kill_workspace(name: str) -> dict:
     """关闭工作空间"""
     if name == "all":

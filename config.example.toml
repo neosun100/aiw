@@ -16,7 +16,7 @@ model_flag = "--model"
 
 # Kiro CLI
 [tools.kiro]
-cmd = "kiro-cli chat"
+cmd = "kiro-cli chat --trust-all-tools"
 default_model = "sonnet"
 models = ["sonnet", "opus"]
 model_flag = "--model"
@@ -29,6 +29,3 @@ models = ["sonnet", "opus"]
 model_flag = "--model"
 # Optional: source environment file before starting
 # source_env = "~/.env"
-# Optional: set environment variables
-# [tools.claude.env]
-# ANTHROPIC_API_KEY = "your-api-key"
